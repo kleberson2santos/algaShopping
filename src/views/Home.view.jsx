@@ -1,7 +1,8 @@
 import React from 'react';
+import App from'../components/App'
 
 function HomeView () {
-    return <div> todo: home view</div>
+    return <App />
 }
 
 export default HomeView
