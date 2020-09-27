@@ -18,7 +18,8 @@ function App (){
                  <Checkbox title="Arroz" value={rice}  onClick={() => setRice(!rice)}/>
              </div>}
              middle={<div>
-                 sua lista de compras
+                 sua lista de compras:
+                 <Checkbox title="Arroz" value={rice}  onClick={() => setRice(!rice)}/>
              </div>
              }
              right={<div>
