@@ -1,46 +1,57 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import AppHeader from '../AppHeader'
 import AppContainer from '../AppContainer'
 import { Wrapper, Container } from './App.styles'
-import Checkbox from '../../shared/Checkbox'
 import LineChart from '../../shared/LineChart'
+import ShoppingList from '../ShoppingList'
+import productsMock from '../../mocks/productsList.json'
+import { useEffect } from 'react'
 
-function App (){
-    const [lettuce, setLetuce] = useState(true)
-    const [rice, setRice] = useState(false)
+function App() {
 
-    const colors = ['#62CBC6', '#00ABAD', '#0085BC', '#006073', '#004D61'];
+    const colors = ['#62CBC6', '#00ABAD', '#0085BC', '#006073', '#004D61']
 
-    // useEffect(() => {
-    //     setTimeout(()=>{
-    //         setHealthy(80);
-    //     }, 5000)
-    // }, [])
+    const [products, setProducts] = useState(productsMock.products)
+    const [selectedProducts, setSelectedProduct] = useState([])
+
+    useEffect(()=> {
+        const newSelectedProducts = products
+        .filter(product=> product.checked)
+        setSelectedProduct(newSelectedProducts)
+    }, [products])
+    
+    function handleToggle (id, checked, name) {
+        const newProducts = products.map(product => product.id === id 
+            ? {...product, checked: !product.checked} 
+            : product
+           
+        )
+        setProducts(newProducts)
+    }
 
     return <Wrapper>
         <Container>
             <AppHeader />
-            <AppContainer 
-             left={<div>
-                 produtos disponiveis:
-                 <Checkbox title="Alface" value={lettuce} onClick={() => setLetuce(!lettuce)}/>
-                 <Checkbox title="Arroz" value={rice}  onClick={() => setRice(!rice)}/>
-             </div>}
-             middle={<div>
-                 sua lista de compras:
-                 <Checkbox title="Arroz" value={rice}  onClick={() => setRice(!rice)}/>
-             </div>
-             }
-             right={<div>
-                 estatisticas:
-                 <LineChart title="saudável" color={colors[0]} percentage={80}/>
-                 <LineChart title="não tão saudável" color={colors[1]} percentage={20}/>
-                 <LineChart title="limpeza" color={colors[2]} percentage={35}/>
-                 <LineChart title="outros" color={colors[3]} percentage={20}/>
-             </div>}
+            <AppContainer
+                left={
+                    <ShoppingList
+                        title="Produtos disponíveis" 
+                        products={products}
+                        onToggle={handleToggle}/>}
+                middle={
+                    <ShoppingList
+                        title="Sua lista de compras" 
+                        products={selectedProducts}/>}
+                right={<div>
+                    estatisticas:
+                 <LineChart title="saudável" color={colors[0]} percentage={80} />
+                    <LineChart title="não tão saudável" color={colors[1]} percentage={20} />
+                    <LineChart title="limpeza" color={colors[2]} percentage={35} />
+                    <LineChart title="outros" color={colors[3]} percentage={20} />
+                </div>}
             />
         </Container>
-        </Wrapper>
+    </Wrapper>
 }
 
 export default App
