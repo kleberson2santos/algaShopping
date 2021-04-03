@@ -6,6 +6,7 @@ import LineChart from '../../shared/LineChart'
 import ShoppingList from '../ShoppingList'
 import productsMock from '../../mocks/productsList.json'
 import extractPercentage from '../../utils/extractPercentage'
+import Calculator from '../Calculator'
 
 function App() {
 
@@ -95,6 +96,7 @@ function App() {
                                 currency: 'BRL'
                             })}
                         </div>
+                        <Calculator/>
                     </div>
                 </div>}
             />
